@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: 
+  race: 
+  job: 
+  name: MyString
+  magic_school: 
+  subclass: 
+  subrace: 
+  level: 1
+
+two:
+  user: 
+  race: 
+  job: 
+  name: MyString
+  magic_school: 
+  subclass: 
+  subrace: 
+  level: 1
