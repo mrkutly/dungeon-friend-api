@@ -1,4 +1,6 @@
 class Character < ApplicationRecord
+  include ApplicationHelper::CharacterMethods
+
   belongs_to :user
   belongs_to :race
   belongs_to :job
