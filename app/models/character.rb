@@ -1,6 +1,4 @@
 class Character < ApplicationRecord
-  include ApplicationHelper::CharacterMethods
-
   belongs_to :user
   belongs_to :race
   belongs_to :job
@@ -32,4 +30,10 @@ class Character < ApplicationRecord
 
   has_many :character_skills
   has_many :skills, through: :character_skills
+
+
+  def starting_equipment
+    @starting_equipment_response ||= RestClient.get("http://dnd5eapi.co/api/startingequipment/#{self.job_id}")
+    @starting_equipment ||= JSON.parse(@starting_equipment_response)
+  end
 end

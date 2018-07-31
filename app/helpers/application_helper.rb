@@ -26,13 +26,4 @@ module ApplicationHelper
       @data ||= JSON.parse(@response)
     end
   end
-
-
-  module CharacterMethods
-
-    def starting_equipment
-      @starting_equipment_response ||= RestClient.get("http://dnd5eapi.co/api/startingequipment/#{self.job_id}")
-      @starting_equipment ||= JSON.parse(@starting_equipment_response)
-    end
-  end
 end
