@@ -1,3 +1,3 @@
 class JobSerializer < ActiveModel::Serializer
-  attributes :name, :job_data
+  attributes :name, :url
 end

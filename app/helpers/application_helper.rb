@@ -26,4 +26,5 @@ module ApplicationHelper
       @data ||= JSON.parse(@response)
     end
   end
+
 end
