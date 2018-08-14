@@ -3,8 +3,4 @@ class Job < ApplicationRecord
   include ApplicationHelper::InstanceMethods
 
   has_many :characters
-
-  def job_data
-    return self.data
-  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_13_141233) do
+ActiveRecord::Schema.define(version: 2018_08_14_145053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 2018_08_13_141233) do
   end
 
   create_table "characters", force: :cascade do |t|
-    t.bigint "user_id"
     t.bigint "race_id"
     t.bigint "job_id"
     t.string "name"
@@ -105,12 +104,12 @@ ActiveRecord::Schema.define(version: 2018_08_13_141233) do
     t.integer "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "test_user_id"
     t.index ["job_id"], name: "index_characters_on_job_id"
     t.index ["magic_school_id"], name: "index_characters_on_magic_school_id"
     t.index ["race_id"], name: "index_characters_on_race_id"
     t.index ["subclass_id"], name: "index_characters_on_subclass_id"
     t.index ["subrace_id"], name: "index_characters_on_subrace_id"
-    t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
   create_table "conditions", force: :cascade do |t|

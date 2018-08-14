@@ -25,6 +25,10 @@ module ApplicationHelper
       @response ||= RestClient.get(self.url)
       @data ||= JSON.parse(@response)
     end
+
+    def show_format
+      { id: self.id, data: self.data }
+    end
   end
 
 end

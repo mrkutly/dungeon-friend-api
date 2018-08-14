@@ -3,8 +3,4 @@ class Race < ApplicationRecord
   include ApplicationHelper::InstanceMethods
 
   has_many :characters
-
-  def race_data
-    return self.data
-  end
 end
