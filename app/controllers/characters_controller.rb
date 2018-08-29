@@ -9,10 +9,10 @@ class CharactersController < ApplicationController
     @character = Character.new(character_params)
 
     if @character.save
-      render json: @character
+      render json: { character: @character, starting_equipment: @character.starting_equipment }
     else
       render json: { errors: @character.errors.full_messages }, status: 400
-    end 
+    end
   end
 
   private
