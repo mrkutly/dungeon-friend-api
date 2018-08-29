@@ -1,4 +1,9 @@
 class Character < ApplicationRecord
+  validates :name, presence: true
+  validates :level, numericality: { greater_than: 0 }
+  validates :race, presence: true
+  validates :job, presence: true
+
   # belongs_to :user
   belongs_to :test_user
   belongs_to :race

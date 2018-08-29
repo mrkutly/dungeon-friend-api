@@ -3,4 +3,5 @@ class Race < ApplicationRecord
   include ApplicationHelper::InstanceMethods
 
   has_many :characters
+
 end
