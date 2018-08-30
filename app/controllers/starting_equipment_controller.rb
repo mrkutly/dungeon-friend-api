@@ -24,10 +24,10 @@ class StartingEquipmentController < ApplicationController
             choices.push(option)
           end
         end
-      end  
+      end
     end
 
-    render json: {starting: starting, choices: choices}
+    render json: {starting: starting, choices: choices.uniq}
   end
 
 end
