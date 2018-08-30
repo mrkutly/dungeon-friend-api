@@ -11,18 +11,20 @@ class StartingEquipmentController < ApplicationController
     for i in 1..num_choices do
       choice = @equipment["choice_#{i}"]
 
-      choice.each do |option|
+      if choice
+        choice.each do |option|
 
-        # if the number you can choose is the length of things you can choose from,
-        # it is automatically put in the starting array
-        if option["from"].length == option["choose"]
-          starting += option["from"]
+          # if the number you can choose is the length of things you can choose from,
+          # it is automatically put in the starting array
+          if option["from"].length == option["choose"]
+            starting += option["from"]
 
-        # else put it in the array choices of to be made on the front end
-        else
-          choices.push(option)
+          # else put it in the array choices of to be made on the front end
+          else
+            choices.push(option)
+          end
         end
-      end
+      end  
     end
 
     render json: {starting: starting, choices: choices}
