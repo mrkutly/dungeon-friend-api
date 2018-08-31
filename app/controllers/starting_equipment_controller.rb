@@ -26,8 +26,8 @@ class StartingEquipmentController < ApplicationController
         end
       end
     end
-
-    render json: {starting: starting, choices: choices.uniq}
+    
+    render json: {starting: starting.uniq, choices: choices.uniq}
   end
 
 end

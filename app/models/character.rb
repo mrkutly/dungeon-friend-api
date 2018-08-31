@@ -42,4 +42,17 @@ class Character < ApplicationRecord
     @starting_equipment_response ||= RestClient.get("http://dnd5eapi.co/api/startingequipment/#{self.job_id}")
     @starting_equipment ||= JSON.parse(@starting_equipment_response)
   end
+
+  def formatted
+    return {
+      character: self,
+      languages: self.languages,
+      proficiencies: self.proficiencies,
+      equipment: self.equipment,
+      conditions: self.conditions,
+      features: self.features,
+      spells: self.spells,
+      skills: self.skills      
+    }
+  end
 end
