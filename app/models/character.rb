@@ -38,21 +38,37 @@ class Character < ApplicationRecord
   has_many :skills, through: :character_skills
 
 
+  def self.new_from_params(character_params, prof_params)
+    character = self.new(character_params)
+    languages = prof_params[:languages].map { |lang| Language.find_by(name: lang) }
+
+    skills, profs = prof_params[:proficiencies].partition do |el|
+      el[:name].include?("Skill:")
+    end
+
+    skills = skills.map { |skill| Skill.find_by(name: skill[:name][7..-1]) }
+
+    proficiencies = profs.map { |prof| Proficiency.find_by(url: prof[:url]) }
+
+    equipment = []
+
+    prof_params[:equipment].each do |e|
+      item = Equipment.find_by(url: e[:item][:url])
+      e[:quantity].times do
+        equipment << item
+      end
+    end
+
+    character.languages = languages
+    character.proficiencies = proficiencies
+    character.equipment = equipment
+    character.skills = skills
+    character
+  end
+
   def starting_equipment
     @starting_equipment_response ||= RestClient.get("http://dnd5eapi.co/api/startingequipment/#{self.job_id}")
     @starting_equipment ||= JSON.parse(@starting_equipment_response)
   end
 
-  def formatted
-    return {
-      character: self,
-      languages: self.languages,
-      proficiencies: self.proficiencies,
-      equipment: self.equipment,
-      conditions: self.conditions,
-      features: self.features,
-      spells: self.spells,
-      skills: self.skills      
-    }
-  end
 end
