@@ -8,7 +8,15 @@ class CharactersController < ApplicationController
   def create
     @character = Character.new(character_params)
     languages = params[:character][:languages].map { |lang| Language.find_by(name: lang) }
-    proficiencies = params[:character][:proficiencies].map { |prof| Proficiency.find_by(url: prof[:url]) }
+
+    skills, profs = params[:character][:proficiencies].partition do |el|
+      el[:name].include?("Skill:")
+    end
+
+    skills = skills.map { |skill| Skill.find_by(name: skill[:name][7..-1]) }
+
+    proficiencies = profs.map { |prof| Proficiency.find_by(url: prof[:url]) }
+
     equipment = []
 
     params[:character][:equipment].each do |e|
@@ -21,6 +29,7 @@ class CharactersController < ApplicationController
     @character.languages = languages
     @character.proficiencies = proficiencies
     @character.equipment = equipment
+    @character.skills = skills
 
     if @character.save
       render json: @character
@@ -35,6 +44,3 @@ class CharactersController < ApplicationController
     params.require(:character).permit(:name, :race_id, :job_id, :level, :test_user_id)
   end
 end
-
-
-#     proficiencies
