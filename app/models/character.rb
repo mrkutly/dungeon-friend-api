@@ -34,19 +34,44 @@ class Character < ApplicationRecord
   has_many :character_skills
   has_many :skills, through: :character_skills
 
+  def assign_hp(prof_params)
+    hit_die = prof_params[:hit_die]
 
-  def self.new_from_params(character_params, prof_params)
-    character = self.new(character_params)
-    languages = prof_params[:languages].map { |lang| Language.find_by(name: lang) }
-
-    skills, profs = prof_params[:proficiencies].partition do |el|
-      el[:name].include?("Skill:")
+    case prof_params[:constitution]
+    when 1
+      modifier = -5
+    when 2,3
+      modifier = -4
+    when 4,5
+      modifier = -3
+    when 6,7
+      modifier = -2
+    when 8,9
+      modifier = -1
+    when 10,11
+      modifier = 0
+    when 12,13
+      modifier = 1
+    when 14,15
+      modifier = 2
+    when 16,17
+      modifier = 3
+    when 18,19
+      modifier = 4
+    when 20
+      modifier = 5
     end
 
-    skills = skills.map { |skill| Skill.find_by(name: skill[:name][7..-1]) }
+    self.max_hp = hit_die + modifier
+    self.current_hp = hit_die + modifier
+  end
 
-    proficiencies = profs.map { |prof| Proficiency.find_by(url: prof[:url]) }
+  def assign_languages(prof_params)
+    languages = prof_params[:languages].map { |lang| Language.find_by(name: lang) }
+    self.languages = languages
+  end
 
+  def assign_equipment(prof_params)
     equipment = []
 
     prof_params[:equipment].each do |e|
@@ -56,13 +81,29 @@ class Character < ApplicationRecord
       end
     end
 
-    character.languages = languages
-    character.proficiencies = proficiencies
-    character.equipment = equipment
-    character.skills = skills
-    character.max_hp = 0
-    character.current_hp = 0
-    character
+    self.equipment = equipment
+  end
+
+  def assign_skills_and_proficiencies(prof_params)
+    skills, profs = prof_params[:proficiencies].partition do |el|
+      el[:name].include?("Skill:")
+    end
+
+    skills = skills.map { |skill| Skill.find_by(name: skill[:name][7..-1]) }
+    proficiencies = profs.map { |prof| Proficiency.find_by(url: prof[:url]) }
+
+    self.proficiencies = proficiencies
+    self.skills = skills
+  end
+
+  def self.new_from_params(character_params, prof_params)
+    character = self.new(character_params)
+
+    character.assign_hp(prof_params)
+    character.assign_languages(prof_params)
+    character.assign_equipment(prof_params)
+    character.assign_skills_and_proficiencies(prof_params)
+    return character
   end
 
   def starting_equipment
