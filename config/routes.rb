@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :subraces, only: :index
 
   get '/starting_equipment', to: 'starting_equipment#show'
+  get '/packs', to: 'packs#show'
 
   resources :test_users, only: :show do
     resources :characters, only: :index
