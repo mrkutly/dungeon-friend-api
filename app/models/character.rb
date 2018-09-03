@@ -19,9 +19,6 @@ class Character < ApplicationRecord
   has_many :character_spells
   has_many :spells, through: :character_spells
 
-  has_many :ability_score_characters
-  has_many :ability_scores, through: :ability_score_characters
-
   has_many :character_conditions
   has_many :conditions, through: :character_conditions
 
