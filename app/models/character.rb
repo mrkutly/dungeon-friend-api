@@ -75,7 +75,8 @@ class Character < ApplicationRecord
     equipment = []
 
     prof_params[:equipment].each do |e|
-      item = Equipment.find_by(url: e[:item][:url])
+      item = Equipment.find_by(url: e[:item][:url]) || Equipment.find_by(name: e[:item][:name])
+      
       e[:quantity].times do
         equipment << item
       end
