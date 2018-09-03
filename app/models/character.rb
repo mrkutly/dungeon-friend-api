@@ -63,6 +63,8 @@ class Character < ApplicationRecord
     character.proficiencies = proficiencies
     character.equipment = equipment
     character.skills = skills
+    character.max_hp = 0
+    character.current_hp = 0
     character
   end
 
