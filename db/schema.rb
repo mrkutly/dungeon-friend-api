@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_02_235934) do
+ActiveRecord::Schema.define(version: 2018_09_03_002436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 2018_09_02_235934) do
     t.bigint "ability_score_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "score"
     t.index ["ability_score_id"], name: "index_ability_score_characters_on_ability_score_id"
     t.index ["character_id"], name: "index_ability_score_characters_on_character_id"
   end
@@ -108,6 +107,12 @@ ActiveRecord::Schema.define(version: 2018_09_02_235934) do
     t.integer "test_user_id"
     t.integer "max_hp"
     t.integer "current_hp"
+    t.integer "strength"
+    t.integer "constitution"
+    t.integer "wisdom"
+    t.integer "dexterity"
+    t.integer "intelligence"
+    t.integer "charisma"
     t.index ["job_id"], name: "index_characters_on_job_id"
     t.index ["magic_school_id"], name: "index_characters_on_magic_school_id"
     t.index ["race_id"], name: "index_characters_on_race_id"
