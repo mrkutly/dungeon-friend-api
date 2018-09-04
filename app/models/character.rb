@@ -75,8 +75,23 @@ class Character < ApplicationRecord
     equipment = []
 
     prof_params[:equipment].each do |e|
+      id = e[:item][:url].split("/").last.to_i
+
+      # if it's a pack, open it up and get all the items inside
+      if id > 153 && id < 161
+        resp = RestClient.get(e[:item][:url])
+        json = JSON.parse(resp)
+        json["contents"].each do |el|
+          item = Equipment.find_by(url: el["item_url"])
+          el["quantity"].times do
+            equipment << item
+          end
+        end
+      end
+
+      # then also add the pack so players can see what the pack gave them if they want
       item = Equipment.find_by(url: e[:item][:url]) || Equipment.find_by(name: e[:item][:name])
-      
+
       e[:quantity].times do
         equipment << item
       end
