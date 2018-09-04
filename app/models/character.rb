@@ -131,8 +131,9 @@ class Character < ApplicationRecord
     equipment = params["equipment"].map { |el| Equipment.find(el["id"]) }
     proficiencies = params["proficiencies"].map { |el| Proficiency.find(el["id"]) }
     skills = params["skills"].map { |el| Skill.find(el["id"]) }
+    spells = params["spells"].map { |el| Spell.find(el["id"]) }
 
-
+    self.spells = spells
     self.equipment = equipment
     self.proficiencies = proficiencies
     self.skills = skills
