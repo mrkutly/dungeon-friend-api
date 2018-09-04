@@ -15,6 +15,17 @@ class CharactersController < ApplicationController
     end
   end
 
+  def update
+    @character = Character.find(params[:id])
+    @character.update_from_params(params[:character])
+
+    if @character.save
+      render json: @character
+    else
+      render json: { errors: @character.errors.full_messages }, status: 400
+    end
+  end
+
   private
 
   def character_params

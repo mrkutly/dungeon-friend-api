@@ -34,6 +34,16 @@ class Character < ApplicationRecord
   has_many :character_skills
   has_many :skills, through: :character_skills
 
+  def self.new_from_params(character_params, prof_params)
+    character = self.new(character_params)
+
+    character.assign_hp(prof_params)
+    character.assign_languages(prof_params)
+    character.assign_equipment(prof_params)
+    character.assign_skills_and_proficiencies(prof_params)
+    return character
+  end
+
   def assign_hp(prof_params)
     hit_die = prof_params[:hit_die]
 
@@ -112,19 +122,27 @@ class Character < ApplicationRecord
     self.skills = skills
   end
 
-  def self.new_from_params(character_params, prof_params)
-    character = self.new(character_params)
-
-    character.assign_hp(prof_params)
-    character.assign_languages(prof_params)
-    character.assign_equipment(prof_params)
-    character.assign_skills_and_proficiencies(prof_params)
-    return character
-  end
-
   def starting_equipment
     @starting_equipment_response ||= RestClient.get("http://dnd5eapi.co/api/startingequipment/#{self.job_id}")
     @starting_equipment ||= JSON.parse(@starting_equipment_response)
   end
 
+  def update_from_params(params)
+    equipment = params["equipment"].map { |el| Equipment.find(el["id"]) }
+    proficiencies = params["proficiencies"].map { |el| Proficiency.find(el["id"]) }
+    skills = params["skills"].map { |el| Skill.find(el["id"]) }
+
+
+    self.equipment = equipment
+    self.proficiencies = proficiencies
+    self.skills = skills
+    self.max_hp = params["max_hp"]
+    self.level = params["level"]
+    self.strength = params["strength"]
+    self.constitution = params["constitution"]
+    self.wisdom = params["wisdom"]
+    self.dexterity = params["dexterity"]
+    self.charisma = params["charisma"]
+    self.intelligence = params["intelligence"]
+  end
 end
