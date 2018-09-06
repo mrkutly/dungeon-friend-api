@@ -112,11 +112,23 @@ class Character < ApplicationRecord
 
   def assign_skills_and_proficiencies(prof_params)
     skills, profs = prof_params[:proficiencies].partition do |el|
-      el[:name].include?("Skill:")
+      # The DND5eAPI has these listed as proficiencies sometimes.
+      # Need to filter them out to prevent internal server errors
+      skill_names = [
+        "Acrobatics", "Animal Handling", "Stealth",
+        "Arcana", "Athletics", "Deception", "History",
+        "Insight", "Intimidation", "Investigation", "Medicine",
+        "Nature", "Perception", "Performance", "Persuasion", "Religion",
+        "Sleight of Hand", "Sleight Of Hand", "Stealth", "Survival"
+      ]
+
+      el[:name].include?("Skill:") || skill_names.include?(el[:name])
     end
 
-    skills = skills.map { |skill| Skill.find_by(name: skill[:name][7..-1]) }
-    proficiencies = profs.map { |prof| Proficiency.find_by(url: prof[:url]) }
+    skills = skills.map { |skill| Skill.find_by(name: skill[:name][7..-1]) || Skill.find_by(name: skill[:name]) }
+    proficiencies = profs.map { |prof|
+      Proficiency.find_by(url: prof[:url]) || Proficiency.find_by(name: prof[:name])
+    }
 
     self.proficiencies = proficiencies
     self.skills = skills

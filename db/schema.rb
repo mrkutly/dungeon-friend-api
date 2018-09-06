@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 2018_09_03_160301) do
     t.integer "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "test_user_id"
     t.integer "max_hp"
     t.integer "current_hp"
     t.integer "strength"
@@ -104,6 +103,7 @@ ActiveRecord::Schema.define(version: 2018_09_03_160301) do
     t.integer "dexterity"
     t.integer "intelligence"
     t.integer "charisma"
+    t.integer "test_user_id"
     t.index ["job_id"], name: "index_characters_on_job_id"
     t.index ["magic_school_id"], name: "index_characters_on_magic_school_id"
     t.index ["race_id"], name: "index_characters_on_race_id"
@@ -207,11 +207,11 @@ ActiveRecord::Schema.define(version: 2018_09_03_160301) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email"
     t.string "name"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
   end
 
 end

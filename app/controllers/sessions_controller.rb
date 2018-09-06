@@ -15,5 +15,5 @@ class SessionsController < ApplicationController
   def current_user
     @user ||= TestUser.find_or_create_by(session_params)
   end
-  
+
 end
