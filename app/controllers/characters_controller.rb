@@ -1,7 +1,7 @@
 class CharactersController < ApplicationController
 
   def index
-    @characters = Character.where(test_user_id: params[:test_user_id])
+    @characters = Character.where(user_id: params[:user_id])
     render json: @characters
   end
 
@@ -29,6 +29,6 @@ class CharactersController < ApplicationController
   private
 
   def character_params
-    params.require(:character).permit(:name, :race_id, :job_id, :level, :test_user_id, :strength, :charisma, :dexterity, :wisdom, :intelligence, :constitution)
+    params.require(:character).permit(:name, :race_id, :job_id, :level, :user_id, :strength, :charisma, :dexterity, :wisdom, :intelligence, :constitution)
   end
 end

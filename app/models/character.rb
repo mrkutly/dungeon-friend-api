@@ -4,8 +4,8 @@ class Character < ApplicationRecord
   validates :race, presence: true
   validates :job, presence: true
 
-  # belongs_to :user
-  belongs_to :test_user
+  belongs_to :user, optional: true
+  belongs_to :test_user, optional: true
   belongs_to :race
   belongs_to :job
 

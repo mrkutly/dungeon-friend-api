@@ -16,4 +16,12 @@ Rails.application.routes.draw do
   resources :test_users, only: :show do
     resources :characters, only: :index
   end
+
+  resources :users, only: :create
+  
+  resources :users, only: :show do
+    resources :characters, only: :index
+  end
+
+  mount ActionCable.server, at: '/cable'
 end

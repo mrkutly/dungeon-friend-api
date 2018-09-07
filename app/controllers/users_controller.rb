@@ -4,16 +4,16 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: { user: @user }, status: :created
+      render json: { id: @user.id }, status: :created
     else
-      render json: { error: "Invalid user" }, status: :bad_request
+      render json: { errors: @user.errors.full_messages }, status: :bad_request
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :password)
+    params.require(:user).permit(:name, :password, :password_confirmation)
   end
 
 end
