@@ -144,9 +144,10 @@ class Character < ApplicationRecord
     proficiencies = params["proficiencies"].map { |el| Proficiency.find(el["id"]) }
     skills = params["skills"].map { |el| Skill.find(el["id"]) }
     spells = params["spells"].map { |el| Spell.find(el["id"]) }
+
     self.equipment.delete_all
     self.update(spells: spells, equipment: equipment, skills: skills, proficiencies: proficiencies,
-      max_hp: params["max_hp"], level: params["level"], strength: params["strength"], constitution: params["constitution"],
+      max_hp: params["max_hp"], current_hp: params["current_hp"], level: params["level"], strength: params["strength"], constitution: params["constitution"],
       wisdom: params["wisdom"], dexterity: params["dexterity"], charisma: params["charisma"], intelligence: params["intelligence"])
   end
 end
