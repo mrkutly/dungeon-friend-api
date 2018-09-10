@@ -145,6 +145,11 @@ class Character < ApplicationRecord
     self.update(equipment: equipment)
   end
 
+  def update_features(new_feats)
+    feats = new_feats.map { |el| Feature.find(el["id"]) }
+    self.update(features: feats)
+  end
+
   def update_languages(new_langs)
     langs = new_langs.map { |el| Language.find(el["id"]) }
     self.update(languages: langs)
@@ -171,6 +176,7 @@ class Character < ApplicationRecord
     self.update_skills(params["skills"])
     self.update_spells(params["spells"])
     self.update_languages(params["languages"])
+    self.update_features(params["features"])
 
     self.update(max_hp: params["max_hp"], current_hp: params["current_hp"], level: params["level"], strength: params["strength"], constitution: params["constitution"],
       wisdom: params["wisdom"], dexterity: params["dexterity"], charisma: params["charisma"], intelligence: params["intelligence"])
