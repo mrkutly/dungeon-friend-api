@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_183348) do
+ActiveRecord::Schema.define(version: 2018_09_10_195448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,9 +89,6 @@ ActiveRecord::Schema.define(version: 2018_09_07_183348) do
     t.bigint "race_id"
     t.bigint "job_id"
     t.string "name"
-    t.bigint "magic_school_id"
-    t.bigint "subclass_id"
-    t.bigint "subrace_id"
     t.integer "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -106,20 +103,10 @@ ActiveRecord::Schema.define(version: 2018_09_07_183348) do
     t.integer "test_user_id"
     t.integer "user_id"
     t.index ["job_id"], name: "index_characters_on_job_id"
-    t.index ["magic_school_id"], name: "index_characters_on_magic_school_id"
     t.index ["race_id"], name: "index_characters_on_race_id"
-    t.index ["subclass_id"], name: "index_characters_on_subclass_id"
-    t.index ["subrace_id"], name: "index_characters_on_subrace_id"
   end
 
   create_table "conditions", force: :cascade do |t|
-    t.string "name"
-    t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "damage_types", force: :cascade do |t|
     t.string "name"
     t.string "url"
     t.datetime "created_at", null: false
@@ -154,13 +141,6 @@ ActiveRecord::Schema.define(version: 2018_09_07_183348) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "magic_schools", force: :cascade do |t|
-    t.string "name"
-    t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "proficiencies", force: :cascade do |t|
     t.string "name"
     t.string "url"
@@ -187,24 +167,6 @@ ActiveRecord::Schema.define(version: 2018_09_07_183348) do
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "subclasses", force: :cascade do |t|
-    t.string "name"
-    t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "subraces", force: :cascade do |t|
-    t.string "name"
-    t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "test_users", force: :cascade do |t|
-    t.string "name"
   end
 
   create_table "users", force: :cascade do |t|
