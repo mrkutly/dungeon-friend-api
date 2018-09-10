@@ -139,15 +139,40 @@ class Character < ApplicationRecord
     @starting_equipment ||= JSON.parse(@starting_equipment_response)
   end
 
-  def update_from_params(params)
-    equipment = params["equipment"].map { |el| Equipment.find(el["id"]) }
-    proficiencies = params["proficiencies"].map { |el| Proficiency.find(el["id"]) }
-    skills = params["skills"].map { |el| Skill.find(el["id"]) }
-    spells = params["spells"].map { |el| Spell.find(el["id"]) }
-
+  def update_equipment(new_equipment)
+    equipment = new_equipment.map { |el| Equipment.find(el["id"]) }
     self.equipment.delete_all
-    self.update(spells: spells, equipment: equipment, skills: skills, proficiencies: proficiencies,
-      max_hp: params["max_hp"], current_hp: params["current_hp"], level: params["level"], strength: params["strength"], constitution: params["constitution"],
+    self.update(equipment: equipment)
+  end
+
+  def update_languages(new_langs)
+    langs = new_langs.map { |el| Language.find(el["id"]) }
+    self.update(languages: langs)
+  end
+
+  def update_profs(new_profs)
+    profs = new_profs.map { |el| Proficiency.find(el["id"]) }
+    self.update(proficiencies: profs)
+  end
+
+  def update_skills(new_skills)
+    skills = new_skills.map { |el| Skill.find(el["id"]) }
+    self.update(skills: skills)
+  end
+
+  def update_spells(new_spells)
+    spells = new_spells.map { |el| Spell.find(el["id"]) }
+    self.update(spells: spells)
+  end
+
+  def update_from_params(params)
+    self.update_equipment(params["equipment"])
+    self.update_profs(params["proficiencies"])
+    self.update_skills(params["skills"])
+    self.update_spells(params["spells"])
+    self.update_languages(params["languages"])
+
+    self.update(max_hp: params["max_hp"], current_hp: params["current_hp"], level: params["level"], strength: params["strength"], constitution: params["constitution"],
       wisdom: params["wisdom"], dexterity: params["dexterity"], charisma: params["charisma"], intelligence: params["intelligence"])
   end
 end

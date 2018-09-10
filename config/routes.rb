@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :equipment, only: :index
   resources :skills, only: :index
   resources :proficiencies, only: :index
+  resources :languages, only: :index
 
   get '/starting_equipment', to: 'starting_equipment#show'
   get '/packs', to: 'packs#show'
@@ -18,7 +19,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: :create
-  
+
   resources :users, only: :show do
     resources :characters, only: :index
   end
