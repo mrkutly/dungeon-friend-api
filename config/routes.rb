@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :languages, only: :index
   resources :proficiencies, only: :index
   resources :races, only: [:index, :show]
-  resources :sessions, only: :create
+  resources :sessions, only: [:create, :index]
   resources :skills, only: :index
   resources :spells, only: :index
   resources :subraces, only: :index

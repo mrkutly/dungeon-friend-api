@@ -4,7 +4,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: { id: @user.id }, status: :created
+      token = encode_token({user_id: @user.id})
+      render json: { user: { id: @user.id }, token: token }, status: :created
     else
       render json: { errors: @user.errors.full_messages }, status: :bad_request
     end

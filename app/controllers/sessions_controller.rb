@@ -1,13 +1,20 @@
 class SessionsController < ApplicationController
 
+  before_action :authorized, only: :index
+
   def create
     current_user
 
     if @user && @user.authenticate(session_params[:password])
-      render json: { id: @user.id }
+      token = encode_token(user_id: @user.id)
+      render json: { user: { id: @user.id }, token: token }, status: :accepted
     else
       render json: { errors: "Invalid username or password" }, status: :unauthorized
     end
+  end
+
+  def index
+    render json: { user: {id: @user.id} }, status: :accepted
   end
 
   private
@@ -18,7 +25,5 @@ class SessionsController < ApplicationController
 
   def current_user
     @user ||= User.find_by(name: session_params[:name])
-     # TestUser.find_or_create_by(session_params[:name])
   end
-
 end
