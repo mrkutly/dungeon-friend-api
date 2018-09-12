@@ -173,7 +173,17 @@ class Character < ApplicationRecord
     self.update_languages(params["languages"])
     self.update_features(params["features"])
 
-    self.update(max_hp: params["max_hp"], current_hp: params["current_hp"], level: params["level"], strength: params["strength"], constitution: params["constitution"],
-      wisdom: params["wisdom"], dexterity: params["dexterity"], charisma: params["charisma"], intelligence: params["intelligence"])
+    self.update(
+      charisma: params["charisma"],
+      constitution: params["constitution"],
+      current_hp: params["current_hp"],
+      dexterity: params["dexterity"],
+      intelligence: params["intelligence"],
+      level: params["level"],
+      max_hp: params["max_hp"],
+      speed: params["speed"],
+      strength: params["strength"],
+      wisdom: params["wisdom"]
+    )
   end
 end
