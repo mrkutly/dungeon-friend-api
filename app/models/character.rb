@@ -73,7 +73,7 @@ class Character < ApplicationRecord
 
   def assign_languages(prof_params)
     languages = prof_params[:languages].map { |lang| Language.find_by(name: lang) }
-    self.languages = languages
+    self.languages = languages.compact
   end
 
   def assign_equipment(prof_params)
@@ -102,7 +102,7 @@ class Character < ApplicationRecord
       end
     end
 
-    self.equipment = equipment
+    self.equipment = equipment.compact
   end
 
   def assign_skills_and_proficiencies(prof_params)
@@ -125,8 +125,8 @@ class Character < ApplicationRecord
       Proficiency.find_by(url: prof[:url]) || Proficiency.find_by(name: prof[:name])
     }
 
-    self.proficiencies = proficiencies
-    self.skills = skills
+    self.proficiencies = proficiencies.compact
+    self.skills = skills.compact
   end
 
   def starting_equipment
@@ -135,33 +135,33 @@ class Character < ApplicationRecord
   end
 
   def update_equipment(new_equipment)
-    equipment = new_equipment.map { |el| Equipment.find(el["id"]) }
+    equipment = new_equipment.map { |el| Equipment.find(el["id"]) }.compact
     self.equipment.delete_all
     self.update(equipment: equipment)
   end
 
   def update_features(new_feats)
-    feats = new_feats.map { |el| Feature.find(el["id"]) }
+    feats = new_feats.map { |el| Feature.find(el["id"]) }.compact
     self.update(features: feats)
   end
 
   def update_languages(new_langs)
-    langs = new_langs.map { |el| Language.find(el["id"]) }
+    langs = new_langs.map { |el| Language.find(el["id"]) }.compact
     self.update(languages: langs)
   end
 
   def update_profs(new_profs)
-    profs = new_profs.map { |el| Proficiency.find(el["id"]) }
+    profs = new_profs.map { |el| Proficiency.find(el["id"]) }.compact
     self.update(proficiencies: profs)
   end
 
   def update_skills(new_skills)
-    skills = new_skills.map { |el| Skill.find(el["id"]) }
+    skills = new_skills.map { |el| Skill.find(el["id"]) }.compact
     self.update(skills: skills)
   end
 
   def update_spells(new_spells)
-    spells = new_spells.map { |el| Spell.find(el["id"]) }
+    spells = new_spells.map { |el| Spell.find(el["id"]) }.compact
     self.update(spells: spells)
   end
 
