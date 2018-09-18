@@ -1,24 +1,4 @@
-# README
+# Dungeon Friend API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This is the backend for Dungeon Friend, a character management and creation app for Dungeons and Dragons 5th Edition.
+The data is pulled from the DnD5eAPI, which can be found at http://www.dnd5eapi.co/ 
